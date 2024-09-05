@@ -1,8 +1,7 @@
 #!/bin/bash
+sleep 2
 
 wp --allow-root core download
-
-sleep 2
 
 wp config create --dbname="$MYSQL_DATABASE" --dbuser="$MYSQL_USER" --dbpass="$MYSQL_PASSWORD" --dbhost="mariadb" --allow-root
 

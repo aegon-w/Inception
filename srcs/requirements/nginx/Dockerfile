@@ -1,13 +1,19 @@
 FROM debian:bullseye-slim
 
-RUN apt update && apt upgrade -y && apt install -y nginx openssl \
-    && openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout localhost.key -out localhost.crt \
-    -subj "/CN=localhost" \
-    && cp localhost.crt ./etc/ssl/certs/localhost.crt \
-    && cp localhost.key ./etc/ssl/private/localhost.key
+# Update the package list, upgrade installed packages, and install NGINX and OpenSSL
+RUN apt update && apt upgrade -y && apt install -y nginx openssl
 
-COPY conf/default /etc/nginx/sites-enabled/
+# Generate a self-signed SSL certificate
+RUN mkdir -p /etc/ssl/certs /etc/ssl/private && \
+    openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+    -keyout /etc/ssl/private/localhost.key -out /etc/ssl/certs/localhost.crt \
+    -subj "/CN=localhost"
 
+# Copy the NGINX site configuration file
+COPY conf/default /etc/nginx/sites-enabled/default
+
+# Expose port 443 for HTTPS traffic
 EXPOSE 443
 
+# Start NGINX
 CMD ["nginx", "-g", "daemon off;"]

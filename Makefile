@@ -1,7 +1,7 @@
 all: up
 
 up:
-	@docker compose -f ./srcs/docker-compose.yml up -d
+	@docker compose -f ./srcs/docker-compose.yml up --build -d
 
 ps:
 	@docker compose -f ./srcs/docker-compose.yml ps

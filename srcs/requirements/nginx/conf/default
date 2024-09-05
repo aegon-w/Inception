@@ -1,8 +1,27 @@
+# server {
+#     listen 443 ssl;
+#     server_name localhost;
+
+#     root /var/www/html;
+
+#     ssl_certificate /etc/ssl/certs/localhost.crt;
+#     ssl_certificate_key /etc/ssl/private/localhost.key;
+
+
+#     ssl_protocols TLSv1.2 ;
+
+#     index index.html;
+
+#     location / {
+#         try_files $uri $uri/ =404;
+#     }
+# }
+
 server {
     listen 443 ssl;
     listen [::]:443 ssl;
-    
-    server_name localhost;
+
+    server_name m-boukel.42.fr;
 
     root /var/www/html/;
 
